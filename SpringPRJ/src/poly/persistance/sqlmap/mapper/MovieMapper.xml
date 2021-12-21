@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.IMovieMapper">
+
+
+<!--	영화 중복 확인 -->
+	<select id="getMovieExists" parameterType="MovieDTO" resultType="MovieDTO">
+		SELECT IF(COUNT(1) = 0, 'N', 'Y') AS EXISTS_YN
+		FROM myAwsDB.MOVIE_INFO
+		WHERE MOVIE_CODE = #{movie_code} OR MOVIE_TITLE = #{movie_code}
+	</select>
+
+<!--	영화 등록 -->
+	<insert id="insertMovieInfo" parameterType="MovieDTO">
+		INSERT INFO myAwsDB.MOVIE_INFO
+			(
+				MOVIE_CODE,
+				MOVIE_TITLE,
+				MOVIE_COMMENT,
+				MOVIE_ANALYSIS,
+				MOVIE_RATING,
+				MOVIE_IMG,
+			) VALUES
+			(
+				#{movie_code},
+				#{movie_title},
+				#{movie_comment},
+				#{movie_analysis},
+				#{movie_rating},
+				#{movie_img}
+			)
+	</insert>
+<!--	영화 조회 -->
+	<select id="findMovieInfo" resultType="MovieDTO">
+		SELECT
+			MOVIE_SEQ, MOVIE_CODE, MOVIE_TITLE, MOVIE_TITLE, MOVIE_COMMENT, MOVIE_ANALYSIS, MOVIE_RATING, MOVIE_IMG
+		FROM myAwsDB.MOBIE_INFO
+	</select>
+
+
+</mapper>
