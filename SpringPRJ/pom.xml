@@ -31,6 +31,12 @@
 			<version>4.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- MariaDB -->
 		<dependency>
@@ -130,12 +136,12 @@
 			<version>1.4</version>
 		</dependency>
 
-		<!-- Oracle -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>12.1.0.1</version>
-		</dependency>
+<!--		&lt;!&ndash; Oracle &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>com.oracle</groupId>-->
+<!--			<artifactId>ojdbc6</artifactId>-->
+<!--			<version>12.1.0.1</version>-->
+<!--		</dependency>-->
 
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
