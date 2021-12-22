@@ -34,36 +34,7 @@ public class MovieService implements IMovieService {
 
     private Logger log = Logger.getLogger(this.getClass());
 
-    @Override
-    public Map<String,Object> getMovieInfoJSON(String rURL) throws Exception {
-        log.info(this.getClass().getName() + ".getMovieInfoJSON start!");
-
-        Map<String, Object> rMap = new HashMap<String, Object>();
-        // json 결과 받아오기
-        String json = this.getUrlForJSON(CmmUtil.nvl(rURL));
-
-        JSONParser parser = new JSONParser();
-
-        Object obj = parser.parse(json);
-        JSONObject jsonObject = (JSONObject) obj;
-        // String으로 가져오기
-        // String reqYYYYMM = CmmUtil.nvl((String) jsonObject.get("reqYYYYMM"));
-        JSONArray movieInfoArr = (JSONArray) jsonObject.get("movieInfo");
-        log.info("movieInfoArr : " + movieInfoArr);
-
-
-        List<MovieDTO> rList = new ArrayList<MovieDTO>();
-        MovieDTO rDTO = null;
-        for (int i = 0; i < movieInfoArr.size(); i++) {
-            JsonObject result = (JsonObject) movieInfoArr.get(i);
-
-        }
-
-        return rMap;
-    }
-
     private String getUrlForJSON(String callUrl) {
-
         log.info(this.getClass().getName() + ".getUrlForJSON start!");
 
         log.info("Requeted URL:" + callUrl);
@@ -72,8 +43,10 @@ public class MovieService implements IMovieService {
         URLConnection urlConn = null;
         InputStreamReader in = null;
 
+        // json 결과값이 저장되는 변수
         String json = "";
 
+        // SSL 적용된 사이트일 경우, 데이터 증명을 위해 사용
         HostnameVerifier allHostsValid = new HostnameVerifier() {
             @Override
             public boolean verify(String hostname, SSLSession session) {
@@ -100,6 +73,7 @@ public class MovieService implements IMovieService {
 
                 BufferedReader bufferedReader = new BufferedReader(in);
 
+                // 주어진 문자 입력 스트림 inputStream에 대해 기본 크기의 버퍼를 갖는 객체를 생성.
                 if (bufferedReader != null) {
                     int cp;
                     while ((cp = bufferedReader.read()) != -1) {
@@ -120,5 +94,51 @@ public class MovieService implements IMovieService {
 
         return json;
 
+    }
+
+    @Override
+    public int insertMovieInfo(String rURL) throws Exception {
+        log.info(this.getClass().getName() + ".getMovieInfoJSON start!");
+        String json = this.getUrlForJSON(CmmUtil.nvl(rURL));
+
+        JSONParser parser = new JSONParser();
+
+        Object obj = parser.parse(json);
+        JSONObject jsonObject = (JSONObject) obj;
+
+        // String으로 가져오기
+        // String reqYYYYMM = CmmUtil.nvl((String) jsonObject.get("reqYYYYMM"));
+
+        List<Object> movieInfoArr = (JSONArray) jsonObject.get("movieInfo");
+
+        String date = CmmUtil.nvl((String) jsonObject.get("date"));
+        log.info("date : " + date);
+        log.info("movieInfoArr : " + jsonObject.get("movieInfo"));
+
+        MovieDTO pDTO = new MovieDTO();
+        int res = 0;
+
+        for (int i = 0; i < movieInfoArr.size(); i++) {
+            Map<String, Object> result = (Map<String, Object>) movieInfoArr.get(i);
+            log.info("title :: " + CmmUtil.nvl(result.get("title").toString()));
+            log.info("code :: " + CmmUtil.nvl(result.get("code").toString()));
+            log.info("rating ::" + CmmUtil.nvl(result.get("rating").toString()));
+            log.info("comments ::" + CmmUtil.nvl(result.get("comments").toString()));
+
+            String movie_code = CmmUtil.nvl(result.get("code").toString());
+            String movie_title = CmmUtil.nvl(result.get("title").toString());
+            String movie_comment = CmmUtil.nvl(result.get("comments").toString());
+            String movie_rating = CmmUtil.nvl(result.get("rating").toString());
+
+            pDTO.setMovie_code(movie_code);
+            pDTO.setMovie_title(movie_title);
+            pDTO.setMovie_comment(movie_comment);
+            pDTO.setMovie_rating(movie_rating);
+            res += movieMapper.insertMovieInfo(pDTO);
+            log.info("[" + i + "] res : " + res);
+        }
+        res = res / movieInfoArr.size();
+
+        return res;
     }
 }

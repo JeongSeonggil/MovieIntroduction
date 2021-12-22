@@ -13,29 +13,27 @@
 
 <!--	영화 등록 -->
 	<insert id="insertMovieInfo" parameterType="MovieDTO">
-		INSERT INFO myAwsDB.MOVIE_INFO
+		INSERT INTO myAwsDB.MOVIE_INFO
 			(
 				MOVIE_CODE,
 				MOVIE_TITLE,
 				MOVIE_COMMENT,
 				MOVIE_ANALYSIS,
-				MOVIE_RATING,
-				MOVIE_IMG,
+				MOVIE_RATING
 			) VALUES
 			(
 				#{movie_code},
 				#{movie_title},
 				#{movie_comment},
 				#{movie_analysis},
-				#{movie_rating},
-				#{movie_img}
+				#{movie_rating}
 			)
 	</insert>
 <!--	영화 조회 -->
 	<select id="findMovieInfo" resultType="MovieDTO">
 		SELECT
-			MOVIE_SEQ, MOVIE_CODE, MOVIE_TITLE, MOVIE_TITLE, MOVIE_COMMENT, MOVIE_ANALYSIS, MOVIE_RATING, MOVIE_IMG
-		FROM myAwsDB.MOBIE_INFO
+			MOVIE_CODE, MOVIE_TITLE, MOVIE_COMMENT, MOVIE_ANALYSIS, MOVIE_RATING
+		FROM myAwsDB.MOBIE_INFO ORDER BY MOVIE_RATING
 	</select>
 
 

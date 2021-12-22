@@ -24,6 +24,7 @@ def crawlingMovieInfo():
         movieList = soup.find('ul', 'lst_detail_t1')
 
         result = {}
+
         movieInfo = {}
         movieInfoList = []
 
@@ -35,13 +36,15 @@ def crawlingMovieInfo():
 
             movieInfo = {"code": code, "title": title, "comments": comments, "rating": i}
             movieInfoList.append(movieInfo)
-            print(movieInfoList)
             with urlopen(imgUrl) as f:
                 with open("../SpringPRJ/WebContent/resources/assets/movieImg/" + str(code) + ".jpg", "wb") as h:
                     img = f.read()
                     h.write(img)
-        result["date"] = datetime.date.today().isoformat()
-        result["movieInfo"] = movieInfoList
+        # result["movieInfo"] = movieInfoList
+        result["movieInfo"] = movieInfoList;
+
+        result["date"] = datetime.today();
+
         f.close()
         h.close()
 
