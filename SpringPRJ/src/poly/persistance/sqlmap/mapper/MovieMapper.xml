@@ -8,7 +8,7 @@
 	<select id="getMovieExists" parameterType="MovieDTO" resultType="MovieDTO">
 		SELECT IF(COUNT(1) = 0, 'N', 'Y') AS EXISTS_YN
 		FROM myAwsDB.MOVIE_INFO
-		WHERE MOVIE_CODE = #{movie_code} OR MOVIE_TITLE = #{movie_code}
+		WHERE MOVIE_CODE = #{movie_code} OR MOVIE_TITLE = #{movie_title}
 	</select>
 
 <!--	영화 등록 -->
@@ -18,22 +18,31 @@
 				MOVIE_CODE,
 				MOVIE_TITLE,
 				MOVIE_COMMENT,
-				MOVIE_ANALYSIS,
-				MOVIE_RATING
+				MOVIE_ANALYSIS
 			) VALUES
 			(
 				#{movie_code},
 				#{movie_title},
 				#{movie_comment},
-				#{movie_analysis},
-				#{movie_rating}
+				#{movie_analysis}
 			)
 	</insert>
+	
+	<update id="modifyMovieInfo" parameterType="MovieDTO">
+		UPDATE myAwsDB.MOVIE_INFO SET
+
+			MOVIE_CODE = #{movie_code},
+			MOVIE_TITLE = #{movie_title},
+			MOVIE_COMMENT = #{movie_comment},
+			MOVIE_ANALYSIS = #{movie_analysis}
+		WHERE
+			MOVIE_CODE = #{movie_code}
+	</update>
 <!--	영화 조회 -->
 	<select id="findMovieInfo" resultType="MovieDTO">
 		SELECT
-			MOVIE_CODE, MOVIE_TITLE, MOVIE_COMMENT, MOVIE_ANALYSIS, MOVIE_RATING
-		FROM myAwsDB.MOBIE_INFO ORDER BY MOVIE_RATING
+			MOVIE_CODE, MOVIE_TITLE, MOVIE_COMMENT, MOVIE_ANALYSIS
+		FROM myAwsDB.MOBIE_INFO ORDER BY MOVIE_ANALYSIS
 	</select>
 
 

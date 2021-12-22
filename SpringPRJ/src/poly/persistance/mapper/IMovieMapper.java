@@ -13,6 +13,9 @@ public interface IMovieMapper {
     // 영화 등록
     int insertMovieInfo(MovieDTO pDTO) throws Exception;
 
+    // 영화 정보 수정
+    int modifyMovieInfo(MovieDTO pDTO) throws Exception;
+
     // 영화 조회
     List<MovieDTO> findMovieInfo() throws Exception;
 }

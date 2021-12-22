@@ -5,7 +5,6 @@ public class MovieDTO {
     private String movie_title; // 영화 제목
     private String movie_comment; // 영화 댓글
     private String movie_analysis; // 오피니언 마이닝 결과
-    private String movie_rating; // 영화 등수
     private String exists_yn; // 영화 중복 확인 Columns (X)
 
     public String getMovie_code() {
@@ -38,14 +37,6 @@ public class MovieDTO {
 
     public void setMovie_analysis(String movie_analysis) {
         this.movie_analysis = movie_analysis;
-    }
-
-    public String getMovie_rating() {
-        return movie_rating;
-    }
-
-    public void setMovie_rating(String movie_rating) {
-        this.movie_rating = movie_rating;
     }
 
     public String getExists_yn() {

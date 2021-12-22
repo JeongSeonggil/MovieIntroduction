@@ -23,7 +23,9 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 import poly.dto.MovieDTO;
 import poly.persistance.mapper.IMovieMapper;
+import poly.persistance.mapper.INlpMapper;
 import poly.service.IMovieService;
+import poly.service.INlpService;
 import poly.util.CmmUtil;
 
 
@@ -31,6 +33,9 @@ import poly.util.CmmUtil;
 public class MovieService implements IMovieService {
     @Resource(name = "MovieMapper")
     private IMovieMapper movieMapper;
+
+    @Resource(name = "NlpService")
+    private INlpService nlpService;
 
     private Logger log = Logger.getLogger(this.getClass());
 
@@ -122,19 +127,35 @@ public class MovieService implements IMovieService {
             Map<String, Object> result = (Map<String, Object>) movieInfoArr.get(i);
             log.info("title :: " + CmmUtil.nvl(result.get("title").toString()));
             log.info("code :: " + CmmUtil.nvl(result.get("code").toString()));
-            log.info("rating ::" + CmmUtil.nvl(result.get("rating").toString()));
             log.info("comments ::" + CmmUtil.nvl(result.get("comments").toString()));
 
             String movie_code = CmmUtil.nvl(result.get("code").toString());
             String movie_title = CmmUtil.nvl(result.get("title").toString());
             String movie_comment = CmmUtil.nvl(result.get("comments").toString());
-            String movie_rating = CmmUtil.nvl(result.get("rating").toString());
 
+            // 오피니언 마이닝
+            int point = nlpService.preProcessWordAnalysisForMind(movie_comment);
+            String movie_analysis = Integer.toString(point);
+
+            pDTO.setMovie_analysis(movie_analysis);
             pDTO.setMovie_code(movie_code);
             pDTO.setMovie_title(movie_title);
             pDTO.setMovie_comment(movie_comment);
-            pDTO.setMovie_rating(movie_rating);
-            res += movieMapper.insertMovieInfo(pDTO);
+            // 중복 확인
+            MovieDTO checkDTO = movieMapper.getMovieExists(pDTO);
+            if (checkDTO == null) {
+                checkDTO = new MovieDTO();
+            }
+
+            if (CmmUtil.nvl(checkDTO.getExists_yn()).equals("Y")) {
+                log.info("modifyMovieInfo");
+                res += movieMapper.modifyMovieInfo(pDTO);
+
+            }else{
+                log.info("insertMovieInfo");
+                res += movieMapper.insertMovieInfo(pDTO);
+            }
+
             log.info("[" + i + "] res : " + res);
         }
         res = res / movieInfoArr.size();
