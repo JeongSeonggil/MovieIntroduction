@@ -146,12 +146,29 @@
 
                 <%
                     for(int i = 0; i < rList.size(); i++) {
+                        String class_type = "col-lg-6 menu-item";
                         MovieDTO rDTO = rList.get(i);
                         if (rDTO == null) {
                             rDTO = new MovieDTO();
                         }
+                        if (rDTO.getMovie_type().indexOf("액션") != -1){// 장르에 액션이 있다면
+                            class_type += " filter-Action";
+                        }
+                        if (rDTO.getMovie_type().indexOf("모험") != -1){
+                            class_type += " filter-Adventure";
+                        }
+                        if (rDTO.getMovie_type().indexOf("드라마") != -1){
+                            class_type += " filter-Drama";
+                        }
+                        if (rDTO.getMovie_type().indexOf("SF") != -1){
+                            class_type += " filter-SF";
+                        }
+                        if (rDTO.getMovie_type().indexOf("판타지") != -1){
+                            class_type += " filter-Fantasy";
+                        }
+
                 %>
-                <div class="col-lg-6 menu-item filter-starters">
+                <div class="<%=class_type%>">
                     <img src="/resources/assets/movieImg/<%=rDTO.getMovie_code()%>.jpg" class="menu-img" alt="" style="height: 70px;">
                     <div class="menu-content">
                         <a href="/resources/assets/movieImg/<%=rDTO.getMovie_code()%>.jpg" data-gall="gallery-item" class="gallery-lightbox"><%=rDTO.getMovie_title()%></a href=""><span>rating : <%=rDTO.getMovie_analysis()%></span>
