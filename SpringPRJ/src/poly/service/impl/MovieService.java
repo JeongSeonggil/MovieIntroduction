@@ -39,6 +39,7 @@ public class MovieService implements IMovieService {
 
     private Logger log = Logger.getLogger(this.getClass());
 
+    // Url을 사용하여 JSON 형태로 데이터 받아오기
     private String getUrlForJSON(String callUrl) {
         log.info(this.getClass().getName() + ".getUrlForJSON start!");
 
@@ -101,7 +102,7 @@ public class MovieService implements IMovieService {
 
     }
 
-    @Override
+    @Override // 영화 정보 저장 / 수정 (이미 있을 경우 최신 정보로 수정)
     public int insertMovieInfo(String rURL) throws Exception {
         log.info(this.getClass().getName() + ".getMovieInfoJSON start!");
         String json = this.getUrlForJSON(CmmUtil.nvl(rURL));
@@ -128,10 +129,12 @@ public class MovieService implements IMovieService {
             log.info("title :: " + CmmUtil.nvl(result.get("title").toString()));
             log.info("code :: " + CmmUtil.nvl(result.get("code").toString()));
             log.info("comments ::" + CmmUtil.nvl(result.get("comments").toString()));
+            log.info("movie_type ::" + CmmUtil.nvl(result.get("movie_type").toString()));
 
             String movie_code = CmmUtil.nvl(result.get("code").toString());
             String movie_title = CmmUtil.nvl(result.get("title").toString());
             String movie_comment = CmmUtil.nvl(result.get("comments").toString());
+            String movie_type = CmmUtil.nvl(result.get("movie_type").toString());
 
             // 오피니언 마이닝
             int point = nlpService.preProcessWordAnalysisForMind(movie_comment);
@@ -141,6 +144,7 @@ public class MovieService implements IMovieService {
             pDTO.setMovie_code(movie_code);
             pDTO.setMovie_title(movie_title);
             pDTO.setMovie_comment(movie_comment);
+            pDTO.setMovie_type(movie_type);
             // 중복 확인
             MovieDTO checkDTO = movieMapper.getMovieExists(pDTO);
             if (checkDTO == null) {
@@ -161,5 +165,10 @@ public class MovieService implements IMovieService {
         res = res / movieInfoArr.size();
 
         return res;
+    }
+
+    @Override // index page 실행 시 영화 정보를 DB에서 가져오는 기능
+    public List<MovieDTO> findMovieInfo() throws Exception {
+        return movieMapper.findMovieInfo();
     }
 }

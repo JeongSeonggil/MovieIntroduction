@@ -18,13 +18,15 @@
 				MOVIE_CODE,
 				MOVIE_TITLE,
 				MOVIE_COMMENT,
-				MOVIE_ANALYSIS
+				MOVIE_ANALYSIS,
+			 	MOVIE_TYPE
 			) VALUES
 			(
 				#{movie_code},
 				#{movie_title},
 				#{movie_comment},
-				#{movie_analysis}
+				#{movie_analysis},
+			 	#{movie_type}
 			)
 	</insert>
 	
@@ -35,14 +37,15 @@
 			MOVIE_TITLE = #{movie_title},
 			MOVIE_COMMENT = #{movie_comment},
 			MOVIE_ANALYSIS = #{movie_analysis}
+			MOVIE_TYPE = #{movie_type}
 		WHERE
 			MOVIE_CODE = #{movie_code}
 	</update>
 <!--	영화 조회 -->
 	<select id="findMovieInfo" resultType="MovieDTO">
 		SELECT
-			MOVIE_CODE, MOVIE_TITLE, MOVIE_COMMENT, MOVIE_ANALYSIS
-		FROM myAwsDB.MOBIE_INFO ORDER BY MOVIE_ANALYSIS
+			MOVIE_CODE, MOVIE_TITLE, MOVIE_COMMENT, MOVIE_ANALYSIS, MOVIE_TYPE
+		FROM myAwsDB.MOVIE_INFO ORDER BY MOVIE_ANALYSIS DESC;
 	</select>
 
 

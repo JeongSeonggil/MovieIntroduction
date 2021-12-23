@@ -1,14 +1,19 @@
 package poly.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import poly.dto.MovieDTO;
 import poly.service.IMovieService;
 
 import javax.annotation.Resource;
+import javax.ejb.Schedule;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -19,24 +24,43 @@ public class MainController {
 	@Resource(name = "MovieService")
 	private IMovieService movieService;
 
-	@RequestMapping(value="index")
-	public String Index() {
-		log.info(this.getClass());
-		
+	@RequestMapping(value = "index")
+	public String Index(HttpServletRequest request, ModelMap model) throws Exception {
+		log.info(this.getClass().getName());
+
+		try{
+			List<MovieDTO> rList = movieService.findMovieInfo();
+			if (rList == null) {
+				rList = new ArrayList<MovieDTO>();
+				log.info("영화 정보 없음");
+			}
+			log.info(rList.get(0).getMovie_title());
+			model.addAttribute("rList", rList);
+		} catch (Exception e) {
+			log.info("영화 정보 불러오기를 실패하였습니다 :" + e.toString());
+			log.info(e.toString());
+			e.printStackTrace();
+		}
+
 		return "/index";
 	}
+
 
 
 	@RequestMapping(value = "crawlingMovieInfo")
 	public String Test(HttpServletRequest request, ModelMap model) throws Exception {
 		String url = "http://127.0.0.1:5000/crawlingMovieInfo";
-		int res = movieService.insertMovieInfo(url);
 		String msg = "";
-		log.info(this.getClass().getName() + " res : " + res);
-		if (res == 1) {
-			msg = "영화 정보 저장 성공";
-		} else {
-			msg = "영화 정보 저장 실패";
+		String check_code = request.getParameter("check_code"); // 코드 없이 크롤링 실행 불가 session으로 변경
+		if (check_code.equals("1108")){
+			int res = movieService.insertMovieInfo(url);
+
+			log.info(this.getClass().getName() + " res : " + res);
+			if (res == 1) {
+				msg = "영화 정보 저장 성공";
+			} else {
+				msg = "영화 정보 저장 실패";
+			}
 		}
 		url = "/index.do";
 		model.addAttribute("msg", msg);

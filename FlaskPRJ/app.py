@@ -31,10 +31,11 @@ def crawlingMovieInfo():
         for i in range(0, 10):
             code = movieList.findAll('div', 'thumb')[i].find('a')["href"][30:]
             comments = crawlingComments(code=code)
+            movie_type = crawlingType(code=code)
             title = movieList.findAll('dt', 'tit')[i].find('a').getText()
             imgUrl = movieList.findAll('div', 'thumb')[i].find('img')['src']
 
-            movieInfo = {"code": code, "title": title, "comments": comments, "rating": i}
+            movieInfo = {"code": code, "title": title, "comments": comments, "rating": i, "movie_type": movie_type}
             movieInfoList.append(movieInfo)
             with urlopen(imgUrl) as f:
                 with open("../SpringPRJ/WebContent/resources/assets/movieImg/" + str(code) + ".jpg", "wb") as h:
@@ -71,6 +72,19 @@ def crawlingComments(code):
 
     except Exception as e:
         return "No Comments"
+
+def crawlingType(code):
+    url = "https://movie.naver.com/movie/bi/mi/basic.naver?code={}".format(code)
+    html = urlopen(url)
+    soup = BeautifulSoup(html, "html.parser")
+
+    movie_typeList = soup.find('dl', {'class': 'info_spec'}).find('span').findAll("a")
+    movie_type = ""
+    for i in movie_typeList:
+        movie_type = movie_type + i.getText();
+
+    return movie_type
+
 
 
 if __name__ == '__main__':
