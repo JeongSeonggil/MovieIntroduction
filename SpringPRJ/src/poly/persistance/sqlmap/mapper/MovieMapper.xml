@@ -36,7 +36,7 @@
 			MOVIE_CODE = #{movie_code},
 			MOVIE_TITLE = #{movie_title},
 			MOVIE_COMMENT = #{movie_comment},
-			MOVIE_ANALYSIS = #{movie_analysis}
+			MOVIE_ANALYSIS = #{movie_analysis},
 			MOVIE_TYPE = #{movie_type}
 		WHERE
 			MOVIE_CODE = #{movie_code}

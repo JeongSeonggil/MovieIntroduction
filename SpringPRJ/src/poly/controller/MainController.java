@@ -57,6 +57,9 @@ public class MainController {
 			} else {
 				msg = "영화 정보 저장 실패";
 			}
+		}else{
+			log.info("코드 입력 X");
+			msg = "0";
 		}
 		url = "/index.do";
 		model.addAttribute("msg", msg);
