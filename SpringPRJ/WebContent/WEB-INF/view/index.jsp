@@ -32,7 +32,6 @@
     <link href="/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-    <!-- Template Main CSS File -->
     <link href="/resources/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -40,8 +39,6 @@
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
         <h1 class="logo me-auto me-lg-0"><a href="/index.do">MovieIntroduction</a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
@@ -53,7 +50,8 @@
         </nav>
 
     </div>
-</header><!-- End Header -->
+</header>
+<!-- End Header -->
 
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
@@ -73,13 +71,11 @@
 
         </div>
     </div>
-</section><!-- End Hero -->
+</section>
+
+<!-- End Hero -->
 
 <main id="main">
-
-
-
-    <!-- ======= Why Us Section ======= -->
     <section id="why-us" class="why-us">
         <div class="container" data-aos="fade-up">
 
@@ -117,7 +113,8 @@
             </div>
 
         </div>
-    </section><!-- End Why Us Section -->
+    </section>
+    <!-- End Why Us Section -->
 
     <!-- ======= Menu Section ======= -->
     <section id="menu" class="menu section-bg">
@@ -180,16 +177,19 @@
                 <%}%>
         </div>
         </div>
-    </section><!-- End Menu Section -->
+    </section>
+    <!-- End Menu Section -->
 
-</main><!-- End #main -->
+</main>
+<!-- End #main -->
 
 <!-- ======= Footer ======= -->
 <footer id="footer">
     <div class="footer-top" style="white : '100%'; height: 300px;">
 
     </div>
-</footer><!-- End Footer -->
+</footer>
+<!-- End Footer -->
 
 <div id="preloader"></div>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -202,9 +202,6 @@
 <script src="/resources/assets/vendor/php-email-form/validate.js"></script>
 <script src="/resources/assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-<!-- Template Main JS File -->
 <script src="/resources/assets/js/main.js"></script>
-
 </body>
-
 </html>
