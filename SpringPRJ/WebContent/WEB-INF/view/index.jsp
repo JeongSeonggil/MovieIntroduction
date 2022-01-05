@@ -121,7 +121,7 @@
 
     <!-- ======= Menu Section ======= -->
     <section id="menu" class="menu section-bg">
-        <div class="container" data-aos="fade-up" style="height: 800px;">
+        <div class="container" data-aos="fade-up">
 
             <div class="section-title">
                 <h2>MOVIE</h2>
@@ -171,7 +171,7 @@
                 <div class="<%=class_type%>">
                     <img src="/resources/assets/movieImg/<%=rDTO.getMovie_code()%>.jpg" class="menu-img" alt="" style="height: 70px;">
                     <div class="menu-content">
-                        <a href="/resources/assets/movieImg/<%=rDTO.getMovie_code()%>.jpg" data-gall="gallery-item" class="gallery-lightbox"><%=rDTO.getMovie_title()%></a href=""><span>rating : <%=rDTO.getMovie_analysis()%></span>
+                        <a href="https://movie.naver.com/movie/bi/mi/basic.naver?code=<%=rDTO.getMovie_code()%>" data-gall="gallery-item" class="gallery-lightbox"><%=rDTO.getMovie_title()%></a><span>rating : <%=rDTO.getMovie_analysis()%></span>
                     </div>
                     <div class="menu-ingredients">
                         <%=rDTO.getMovie_type()%>
