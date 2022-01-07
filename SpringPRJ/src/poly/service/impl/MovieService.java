@@ -125,7 +125,9 @@ public class MovieService implements IMovieService {
         int res = 0;
 
         for (int i = 0; i < movieInfoArr.size(); i++) {
+
             Map<String, Object> result = (Map<String, Object>) movieInfoArr.get(i);
+
             log.info("title :: " + CmmUtil.nvl(result.get("title").toString()));
             log.info("code :: " + CmmUtil.nvl(result.get("code").toString()));
             log.info("comments ::" + CmmUtil.nvl(result.get("comments").toString()));
@@ -145,6 +147,7 @@ public class MovieService implements IMovieService {
             pDTO.setMovie_title(movie_title);
             pDTO.setMovie_comment(movie_comment);
             pDTO.setMovie_type(movie_type);
+
             // 중복 확인
             MovieDTO checkDTO = movieMapper.getMovieExists(pDTO);
             if (checkDTO == null) {
