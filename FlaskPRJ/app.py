@@ -11,7 +11,7 @@ api = Api(app)
 
 @app.route('/')
 def hello_world():
-    return "Hello"
+    return "Movie API"
 
 
 @app.route('/crawlingMovieInfo')
